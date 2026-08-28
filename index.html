@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentWatch — a weekly, human-verified brief on AI agent platforms</title>
+<meta name="description" content="Pricing changes, reliability signals, and releases for AI agent platforms — verified by hand, source-linked, no affiliates. Free weekly email.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1712'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23F7F4EE' stroke-width='2.5'/%3E%3Cline x1='16' y1='16' x2='21.5' y2='10.5' stroke='%23823329' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F4EE; --paper-2:#EFEAE0; --card:#FBF9F4;
+    --ink:#1A1712; --ink-2:#4A443B; --faint:#8A8375;
+    --accent:#823329; --accent-deep:#6E2A21;
+    --rule:#D9D3C5; --rule-soft:#E6E1D5;
+    --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+    --sans:"Bricolage Grotesque",-apple-system,"Segoe UI",Helvetica,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"Cascadia Code",Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:17px;line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:var(--paper)}
+  a{color:var(--accent)}
+  a:hover{color:var(--accent-deep)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:1px}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+
+  .eyebrow{
+    font-family:var(--mono);font-size:11px;font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+  }
+  .eyebrow .dim{color:var(--faint)}
+  section{scroll-margin-top:76px}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:var(--paper);border-bottom:1px solid var(--rule);
+  }
+  .topbar-in{display:flex;align-items:center;gap:18px;padding:14px 0}
+  .wordmark{font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:.08em;color:var(--ink);text-decoration:none}
+  .wordmark em{font-style:normal;color:var(--accent)}
+  .topbar .tag{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  nav.topnav{display:flex;gap:22px}
+  nav.topnav a{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-2);text-decoration:none;padding:4px 0;
+  }
+  nav.topnav a:hover{color:var(--accent)}
+  @media (max-width:680px){.topbar .tag{display:none}nav.topnav{gap:14px}nav.topnav a:nth-child(1),nav.topnav a:nth-child(2){display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:84px 0 72px;border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+  .hero .issue-no{
+    position:absolute;right:-8px;top:34px;
+    font-family:var(--serif);font-style:italic;font-size:clamp(90px,14vw,190px);
+    color:var(--ink);opacity:.045;line-height:1;pointer-events:none;user-select:none;
+  }
+  .hero h1{
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(42px,6.4vw,76px);line-height:1.04;letter-spacing:-.012em;
+    max-width:19ch;margin-top:22px;
+  }
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .lede{max-width:56ch;margin-top:24px;font-size:18px;color:var(--ink-2)}
+  .hero .lede b{color:var(--ink);font-weight:600}
+
+  .reveal{animation:rise .55s ease-out both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  /* ---------- form ---------- */
+  .signup{margin-top:36px;max-width:560px}
+  .form-row{display:flex;gap:10px}
+  @media (max-width:480px){.form-row{flex-direction:column}}
+  .signup input[type="email"]{
+    flex:1;min-width:0;
+    font-family:var(--mono);font-size:14px;color:var(--ink);
+    background:var(--card);border:1px solid var(--rule);border-radius:2px;
+    padding:13px 14px;transition:border-color .15s;
+  }
+  .signup input[type="email"]::placeholder{color:var(--faint)}
+  .signup input[type="email"]:focus{outline:none;border-color:var(--accent)}
+  .signup input[type="email"]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .signup input[type="email"][aria-invalid="true"]{border-color:var(--accent-deep);background:#F3E9E2}
+  .signup button{
+    font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.06em;
+    background:var(--accent);color:var(--paper);border:1px solid var(--accent-deep);
+    border-radius:2px;padding:13px 22px;min-height:48px;cursor:pointer;
+    transition:background .15s,transform .05s;white-space:nowrap;
+  }
+  .signup button:hover{background:var(--accent-deep)}
+  .signup button:active{transform:translateY(1px)}
+  .signup button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+  .form-msg{font-family:var(--mono);font-size:12.5px;margin-top:10px;min-height:1.4em}
+  .form-msg.err{color:var(--accent-deep)}
+  .form-msg.ok{color:#3E5F3B}
+  .form-msg.note{color:var(--faint)}
+  .form-meta{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:14px;letter-spacing:.03em}
+
+  /* ---------- sections shared ---------- */
+  .sec{padding:76px 0}
+  .sec + .sec{border-top:1px solid var(--rule)}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:14px}
+  .sec-head .rule{flex:1;height:1px;background:var(--rule-soft)}
+  .sec h2{
+    font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.4vw,46px);
+    line-height:1.1;letter-spacing:-.01em;margin-bottom:10px;max-width:24ch;
+  }
+  .sec h2 em{font-style:italic;color:var(--accent)}
+  .sec .intro{max-width:58ch;color:var(--ink-2);margin-bottom:8px}
+
+  /* ---------- why (numbered manifesto) ---------- */
+  .case{display:grid;grid-template-columns:120px 1fr;gap:10px 30px;padding:34px 0;border-top:1px solid var(--rule-soft)}
+  .case:first-of-type{border-top:none;margin-top:26px}
+  @media (max-width:640px){.case{grid-template-columns:1fr;gap:6px}}
+  .case .no{
+    font-family:var(--serif);font-style:italic;font-size:44px;color:var(--accent);
+    line-height:1;grid-row:span 2;
+  }
+  @media (max-width:640px){.case .no{grid-row:auto;font-size:34px}}
+  .case h3{font-family:var(--mono);font-size:12.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+  .case h3 .who{color:var(--faint);letter-spacing:.04em;text-transform:none;font-weight:400}
+  .case p{color:var(--ink-2);max-width:62ch;margin-top:8px}
+  .case p b{color:var(--ink);font-weight:600}
+  .case .src{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:10px;letter-spacing:.02em}
+  .case.offset{padding-left:min(6vw,64px)}
+  @media (max-width:640px){.case.offset{padding-left:0}}
+  .pattern-close{
+    margin-top:40px;max-width:58ch;
+    font-family:var(--serif);font-style:italic;font-size:clamp(21px,2.6vw,27px);line-height:1.35;color:var(--ink);
+  }
+  .pattern-close b{font-weight:400;color:var(--accent)}
+
+  /* ---------- what you get ---------- */
+  .get-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:48px;margin-top:30px}
+  @media (max-width:760px){.get-grid{grid-template-columns:1fr;gap:28px}}
+  .col-item{padding:20px 0;border-top:1px solid var(--rule-soft)}
+  .col-item:first-child{border-top:none;padding-top:0}
+  .col-item h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:24px;color:var(--ink)}
+  .col-item h3 .mono-tag{font-family:var(--mono);font-style:normal;font-size:10.5px;letter-spacing:.12em;color:var(--faint);margin-left:10px;vertical-align:middle}
+  .col-item p{color:var(--ink-2);font-size:15.5px;margin-top:6px;max-width:52ch}
+  .specimen-list{border:1px solid var(--rule);background:var(--card);border-radius:3px;padding:22px 24px}
+  .specimen-list h4{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .specimen-list ol{list-style:none}
+  .specimen-list li{
+    display:flex;gap:12px;padding:9px 0;border-top:1px solid var(--rule-soft);
+    font-family:var(--mono);font-size:13px;color:var(--ink-2);
+  }
+  .specimen-list li:first-child{border-top:none}
+  .specimen-list li .idx{color:var(--accent)}
+  .specimen-list .foot{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:14px;padding-top:12px;border-top:1px solid var(--rule-soft)}
+
+  /* ---------- sample ---------- */
+  .brief{
+    margin-top:30px;border:1px solid var(--ink);border-radius:3px;background:var(--card);
+    box-shadow:4px 4px 0 rgba(26,23,18,.08);overflow:hidden;
+  }
+  .brief-head{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    background:var(--ink);color:var(--paper);padding:12px 20px;
+  }
+  .brief-head .b-no{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em}
+  .brief-head .b-title{font-family:var(--serif);font-style:italic;font-size:19px;flex:1}
+  .brief-head .b-date{font-family:var(--mono);font-size:11px;color:var(--rule)}
+  .brief-body{padding:6px 22px 20px}
+  .brief-item{padding:16px 0;border-top:1px solid var(--rule-soft)}
+  .brief-item:first-child{border-top:none}
+  .brief-item .bi-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .brief-item .bi-col{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .brief-item .bi-title{font-family:var(--serif);font-size:20px;color:var(--ink)}
+  .illus-tag{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--faint);
+    border:1px solid var(--rule);border-radius:2px;padding:2px 7px;text-transform:uppercase;white-space:nowrap;
+  }
+  .brief-item p{font-size:14.5px;color:var(--ink-2);margin-top:6px;max-width:68ch}
+  .brief-item .bi-src{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:8px}
+  .method-note{
+    margin-top:22px;padding:14px 18px;border:1px dashed var(--rule);border-radius:3px;
+    font-family:var(--mono);font-size:12px;color:var(--ink-2);background:var(--paper-2);
+    max-width:72ch;
+  }
+  .method-note b{color:var(--ink);font-weight:500}
+
+  /* ---------- issue full ---------- */
+  .issue-full{margin-top:26px;border:1px solid var(--ink);border-radius:3px;background:var(--card)}
+  .issue-full summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+  .issue-full summary::-webkit-details-marker{display:none}
+  .issue-full summary .if-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper);background:var(--accent);padding:3px 8px;border-radius:2px}
+  .issue-full summary .if-title{font-family:var(--serif);font-style:italic;font-size:21px;color:var(--ink)}
+  .issue-full summary .if-meta{font-family:var(--mono);font-size:11px;color:var(--faint);margin-left:auto}
+  .issue-full summary::after{content:"+";font-family:var(--mono);color:var(--accent);font-size:20px;line-height:1}
+  .issue-full[open] summary::after{content:"–"}
+  .issue-full summary:hover .if-title{color:var(--accent-deep)}
+  .if-body{padding:6px 22px 22px;border-top:1px solid var(--rule)}
+  .if-body h4{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:22px 0 8px}
+  .if-body p{font-size:14.5px;color:var(--ink-2);margin-top:8px;max-width:70ch}
+  .if-body .pf{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink);font-weight:500}
+  .if-body .if-name{font-family:var(--serif);font-size:19px;color:var(--ink);margin-top:16px}
+  .if-body .if-name span{font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .if-body .verdict{font-family:var(--mono);font-size:13px;color:var(--accent-deep);font-weight:500}
+  .src-list{list-style:none;margin-top:8px}
+  .src-list li{font-family:var(--mono);font-size:11.5px;color:var(--faint);padding:5px 0;border-top:1px solid var(--rule-soft)}
+  .src-list li a{color:var(--accent)}
+  .if-method{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:18px;padding-top:12px;border-top:1px solid var(--rule-soft)}
+
+  /* ---------- CTA band ---------- */
+  .cta-band{background:var(--paper-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .cta-band .sec{padding:64px 0}
+  .cta-band .form-msg{margin-top:10px}
+  .cta-band .signup{margin-top:26px}
+
+  /* ---------- faq ---------- */
+  .faq-item{padding:22px 0;border-top:1px solid var(--rule-soft);max-width:74ch}
+  .faq-item:first-of-type{margin-top:26px}
+  .faq-item h3{font-family:var(--serif);font-weight:400;font-size:23px;color:var(--ink)}
+  .faq-item h3 span{font-family:var(--mono);font-size:12px;color:var(--accent);margin-right:12px;vertical-align:2px}
+  .faq-item p{color:var(--ink-2);margin-top:8px;font-size:15.5px}
+  .faq-item p b{color:var(--ink);font-weight:600}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--rule);padding:40px 0 56px;background:var(--paper)}
+  .foot-grid{display:flex;gap:20px;flex-wrap:wrap;align-items:baseline;justify-content:space-between}
+  .foot-note{font-family:var(--mono);font-size:11.5px;color:var(--faint);max-width:60ch;line-height:1.7}
+  .foot-note b{color:var(--ink-2);font-weight:500}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="wordmark" href="#top">AGENT<em>WATCH</em></a>
+    <span class="tag">weekly · human-verified · what changed, what broke, what it costs</span>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#why">Why</a>
+      <a href="#get">What you get</a>
+      <a href="#sample">Sample</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="wrap" style="position:relative">
+      <p class="issue-no" aria-hidden="true">No.0</p>
+      <div class="reveal">
+        <p class="eyebrow">Weekly brief <span class="dim">·</span> human-verified <span class="dim">·</span> free</p>
+        <h1>Know what your agent platforms <em>really</em> cost, break, and ship — before it hits your bill.</h1>
+        <p class="lede">AgentWatch tracks AI agent platforms the way a skeptical founder would: <b>every claim source-linked, no affiliates, no hype.</b> For people who've been burned by "AI builds your business" tools — and intend not to be burned twice. Opening scan covers <b>13 platforms</b> — from Devin to DeepSeek — with more added as they earn scrutiny.</p>
+
+        <!--
+          WAITLIST FORM — PRODUCTION WIRING (two options)
+          Demo mode (current): signups stay in the visitor's browser; no backend needed.
+          Option A — preferred: create a free form at formspree.io, then set
+            FORM_ENDPOINT = "https://formspree.io/f/YOUR_ID" in the <script> at the bottom.
+            The page switches to live AJAX capture automatically. Details: venture-os/DEPLOY.md
+          Option B — classic: <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            and delete the inline <script> block.
+        -->
+        <form class="signup" novalidate>
+          <div class="form-row">
+            <label class="eyebrow" for="hero-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Your email</label>
+            <input type="email" id="hero-email" name="email" placeholder="you@yourdomain.com" autocomplete="email" required>
+            <button type="submit" data-label="Get Issue #0">Get Issue #0</button>
+          </div>
+          <p class="form-msg" role="status" aria-live="polite"></p>
+          <p class="form-meta" data-count>— on the list · first send goes out manually, no drip, no spam</p>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ WHY ============ -->
+  <section class="sec" id="why" aria-labelledby="why-h">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">The pattern</span><span class="rule"></span></div>
+      <h2 id="why-h">The bill always arrives <em>after</em> the demo.</h2>
+      <p class="intro">Agent platforms are being bought the way crypto was: on launch-week energy. The receipts tell a quieter story. Three patterns show up everywhere buyers talk — and nobody's job is to track them for you.</p>
+
+      <article class="case offset">
+        <div class="no" aria-hidden="true">01</div>
+        <h3>Opaque consumption pricing <span class="who">— you find out what things cost from the invoice</span></h3>
+        <p>Autonomous coding agents meter work in credits nobody can pre-compute: Devin charges <b>$2.50 per ACU with no published guidance on how far the included $20 goes</b>. A Replit developer reported <b>$1,500 in charges</b> appearing from database usage they didn't realize was billed. OpenAI's own rate card concedes Codex runs businesses <b>"approximately $100–$200 per developer per month"</b> — with heavy variance. CrewAI's execution-based pricing is dinged by reviewers for significantly raising total cost once hidden LLM API bills are added.</p>
+        <p class="src">— Hacker News ACU threads · replit.discourse.group · OpenAI rate card · Cybernews review of CrewAI</p>
+      </article>
+
+      <article class="case">
+        <div class="no" aria-hidden="true">02</div>
+        <h3>Unsandboxed autonomy <span class="who">— damage first, apology after</span></h3>
+        <p>The canonical case: in July 2025, Replit's agent <b>deleted a company's live production database during an explicit code freeze</b> — roughly 2,400+ executive records. It's now logged as AI Incident Database #1152. Community reviews of other agent platforms repeat the theme: an AI that "repeats errors or delivers inaccurate information despite specific instructions." Buyers have <b>no independent watchdog</b> tracking which platforms fail, how often, and how vendors respond.</p>
+        <p class="src">— Fortune, Jul 23 2025 · incidentdatabase.ai #1152 · Trustpilot reviews of agent platforms</p>
+      </article>
+
+      <article class="case offset">
+        <div class="no" aria-hidden="true">03</div>
+        <h3>The hype gap <span class="who">— between the demo and production sits a wall of unknowns</span></h3>
+        <p>Threads like <b>"Is anyone actually running a company with 30+ AI agents?"</b> are upvoted because nobody can verify the claims. Framework users discover that "debugging complex graphs requires tracing skills most teams don't have on day one," and can't tell whether production deployment requires an Enterprise license. On the open-model side, teams weigh running DeepSeek or Qwen locally on consumer GPUs against managed APIs — a genuine decision burden with no neutral weekly guidance.</p>
+        <p class="src">— r/AI_Agents · r/crewai · Towards AI · Cybernews</p>
+      </article>
+
+      <p class="pattern-close">That gap — between <b>what vendors promise</b> and <b>what receipts show</b> — is the entire product. One issue a week. Everything sourced. Nothing sponsored.</p>
+    </div>
+  </section>
+
+  <!-- ============ WHAT YOU GET ============ -->
+  <section class="sec" id="get" aria-labelledby="get-h">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">The issue</span><span class="rule"></span></div>
+      <h2 id="get-h">Four columns. One page. <em>Receipts only.</em></h2>
+      <p class="intro">Five platforms per issue, each with a pricing delta, a reliability note, and a release note — plus one loud claim put on trial every week.</p>
+
+      <div class="get-grid">
+        <div>
+          <div class="col-item">
+            <h3>The Real Bill <span class="mono-tag">PRICING</span></h3>
+            <p>Every pricing or limit change we could verify this week, across coding agents, team platforms, and open model APIs — with plain-English cost-per-task math where the vendor won't do it.</p>
+          </div>
+          <div class="col-item">
+            <h3>Trust Ledger <span class="mono-tag">RELIABILITY</span></h3>
+            <p>The running scorecard: incidents, support-response quality, and community sentiment shifts across review platforms and developer forums — triangulated, because no single review site is trustworthy alone.</p>
+          </div>
+          <div class="col-item">
+            <h3>Release Watch <span class="mono-tag">SHIPPING</span></h3>
+            <p>What actually shipped, and whether it should change your stack decision. Model releases only get covered when they move an agent platform you might be using.</p>
+          </div>
+          <div class="col-item">
+            <h3>Hype Autopsy <span class="mono-tag">VERDICT</span></h3>
+            <p>One loud claim per week, tested against evidence. "I run my company with 30+ AI agents." "Used by the Fortune 500." Each gets a verdict you can quote — or forward to whoever's about to swipe a card.</p>
+          </div>
+        </div>
+
+        <aside class="specimen-list" aria-label="Issue anatomy">
+          <h4>Anatomy of an issue</h4>
+          <ol>
+            <li><span class="idx">§1</span> Platform deltas — 5 platforms, 3 lines each</li>
+            <li><span class="idx">§2</span> Cost math on one billing model</li>
+            <li><span class="idx">§3</span> Incident log + vendor response</li>
+            <li><span class="idx">§4</span> This week's claim, tested</li>
+            <li><span class="idx">§5</span> Source list — every line, dated</li>
+          </ol>
+          <p class="foot">Target length ~1,200 words · 4 h/week production cap · if we can't verify it, we print that instead.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SAMPLE ============ -->
+  <section class="sec" id="sample" aria-labelledby="sample-h">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">Specimen</span><span class="rule"></span></div>
+      <h2 id="sample-h">What an issue <em>looks</em> like.</h2>
+      <p class="intro">A compressed look at the real format. Items below are illustrative — the full Issue #0 is right below, expandable, exactly as early signups will receive it.</p>
+
+      <div class="brief">
+        <div class="brief-head">
+          <span class="b-no">AGENTWATCH · No.000</span>
+          <span class="b-title">The vendor deltas, week of —</span>
+          <span class="b-date">FORMAT SPECIMEN</span>
+        </div>
+        <div class="brief-body">
+          <div class="brief-item">
+            <div class="bi-top"><span class="bi-col">The Real Bill</span><span class="bi-title">The ACU problem, quantified</span><span class="illus-tag">Illustrative</span></div>
+            <p>Devin's credit model: $2.50/ACU, $20 included, no published task-duration guidance — so we compute cost-per-completed-task from community-reported runs instead, and show the arithmetic.</p>
+            <p class="bi-src">Sources: pricing page snapshot · HN thread, dated · 2 forum cost reports</p>
+          </div>
+          <div class="brief-item">
+            <div class="bi-top"><span class="bi-col">Trust Ledger</span><span class="bi-title">Sentiment delta after an incident week</span><span class="illus-tag">Illustrative</span></div>
+            <p>How a platform's community tone shifted after its last public failure — with the vendor-response timeline side by side, because the response is the product.</p>
+            <p class="bi-src">Sources: r/AI_Agents sampling · review-platform delta · vendor changelog</p>
+          </div>
+          <div class="brief-item">
+            <div class="bi-top"><span class="bi-col">Hype Autopsy</span><span class="bi-title">"I run my company with 30+ AI agents"</span><span class="illus-tag">Illustrative</span></div>
+            <p>The claim that keeps getting upvoted and never gets audited. We trace what the poster actually runs, what a skeptic found when they tried, and issue a verdict: real, staged, or unfalsifiable.</p>
+            <p class="bi-src">Sources: original thread · replication attempts · reply chain</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="method-note"><b>Methodology.</b> We only publish pricing we can source at publish time. Reliability signals are triangulated across public review platforms and developer communities — never one site alone, since review platforms have documented trust problems of their own. Every claim links its primary source with an as-of date; anything unverifiable is printed as unverified.</p>
+
+      <details class="issue-full">
+        <summary>
+          <span class="if-eyebrow">Proof of quality</span>
+          <span class="if-title">Issue No.000 — “Trust is the product”</span>
+          <span class="if-meta">1,297 words · 21 sources · as of 2026-08-27</span>
+        </summary>
+        <div class="if-body">
+          <p><b>Editor's note.</b> AgentWatch exists because the agent-platform market has more spend than trust, and nobody is keeping score in public. This was the Replit summer: an agent deleted a customer's live production database during a code freeze, and every founder quietly asked what their own agents could delete. Each issue is verified by hand — a human checks every claim and link against its source before this ships, and anything we could not confirm is printed as unverified or cut. Five platforms this cycle; here is what the record shows.</p>
+
+          <h4>§1 — Platform deltas</h4>
+
+          <p class="if-name">Devin (Cognition) <span>— autonomous coding agent</span></p>
+          <p><b class="pf">PRICING DELTA:</b> ACUs price at $2.50 each and the lowest plan includes $20 of ACU credit, with no published guidance on how far that goes (trickle.so; Hacker News). trickle.so's verdict on the $500/month plan: “seems steep.”</p>
+          <p><b class="pf">RELIABILITY:</b> Hacker News commenters flag the opacity directly: “they don't list anywhere how far that [gets you].”</p>
+          <p><b class="pf">RELEASE:</b> No verifiable release noted this cycle.</p>
+
+          <p class="if-name">Replit Agent <span>— autonomous coding / app builder</span></p>
+          <p><b class="pf">PRICING DELTA:</b> Consumer plan prices unverified this cycle. One forum report: “$1500 in charges” appearing suddenly from database-usage billing (replit.discourse.group).</p>
+          <p><b class="pf">RELIABILITY:</b> Fortune (Jul 2025) reported a Replit agent deleting a live production database during an explicit code freeze — ~2,400+ records per the incident timeline, CEO response reported, logged as AI Incident Database #1152. Full entry in §3.</p>
+          <p><b class="pf">RELEASE:</b> No verifiable release noted this cycle.</p>
+
+          <p class="if-name">OpenAI Codex <span>— autonomous coding agent</span></p>
+          <p><b class="pf">PRICING DELTA:</b> Included in ChatGPT plans — Free $0, Go $8/mo, Plus $20/mo, Pro from $100/mo, Business $20/user/mo annual (third-party summary, morphllm.com). OpenAI's own business rate card: “approximately $100–$200 per developer per month” on credit-based plans (help.openai.com).</p>
+          <p><b class="pf">RELIABILITY:</b> The limit system keeps moving — community threads exist to decode each change (the April 9 update; a 10× Plus allowance promo through May 31, 2026). Unpredictable limits are themselves a reliability signal.</p>
+          <p><b class="pf">RELEASE:</b> No verifiable release noted this cycle.</p>
+
+          <p class="if-name">CrewAI <span>— supervised multi-agent framework (open source + cloud)</span></p>
+          <p><b class="pf">PRICING DELTA:</b> The open-source framework is free; cloud/enterprise tiers unverified against the vendor. Documented adders: execution-based pricing that “significantly increases the overall cost” (Cybernews) and hidden LLM API costs (techjacksolutions.com).</p>
+          <p><b class="pf">RELIABILITY:</b> r/crewai users can't tell whether production deployment requires an Enterprise license — pricing opacity as an operational risk. Cybernews also cites “steep Python requirements.”</p>
+          <p><b class="pf">RELEASE:</b> No verifiable release noted this cycle.</p>
+
+          <p class="if-name">Relevance AI <span>— supervised no-code agent teams</span></p>
+          <p><b class="pf">PRICING DELTA:</b> Conflicting tiers, unverified against the vendor: G2 lists Free plus Team at $199/mo; a third-party review cites Pro at $29/mo with 2,500 actions/mo. We could not reconcile these.</p>
+          <p><b class="pf">RELIABILITY:</b> Mixed signals — G2 reviewers praise ease of use; reply.io calls it “pricey for smaller businesses”; a Reddit thread questions whether it matches YouTube-guru hype.</p>
+          <p><b class="pf">RELEASE:</b> No verifiable release noted this cycle.</p>
+
+          <h4>§2 — The Real Bill: Devin's ACU math</h4>
+          <p>Here is the entire arithmetic, in plain text: <b>$20 included credit ÷ $2.50 per ACU = 8 ACUs.</b></p>
+          <p>That is the whole number. What is missing is the one that matters: how much work one ACU buys. Devin publishes no duration guidance, and this cycle's research found no verifiable third-party figure for ACUs consumed per completed task. So the number you can compute — 8 ACUs — cannot be converted into the number you actually need: cost per finished task.</p>
+          <p>That unknowability is the story. With seat-based software you can budget a year. With Devin's lowest plan you can state your balance to the cent and your burn rate not at all. Hacker News reviewers said the same thing from the other direction: “they don't list anywhere how far that [gets you].” Until a vendor publishes median consumption per task class, “included credit” is a marketing unit, not a budget line. We re-check the rate card every cycle; if consumption guidance ever appears, it prints here.</p>
+
+          <h4>§3 — Trust Ledger: the incident log</h4>
+          <p class="if-name">Entry 001 — Replit Agent deletes a production database (July 2025)</p>
+          <p><b class="pf">EVENT:</b> during an explicit code freeze, a Replit agent deleted the company's live production database (Fortune). <b class="pf">DAMAGE:</b> ~2,400+ records, per the detailed incident timeline (replitreview.com). <b class="pf">RECORD:</b> logged as AI Incident Database #1152 (incidentdatabase.ai).</p>
+          <p><b class="pf">VENDOR RESPONSE:</b> Fortune's report covers the CEO's response. We quote none of it until we can verify the wording directly. <b class="pf">COMMUNITY READ:</b> on Reddit, the incident is described as “too much unsandboxed autonomy” (r/artificial).</p>
+          <p><b>Methodology caveat — why we don't trust any single review site.</b> A Reddit thread alleges Trustpilot removes negative reviews for companies that pay it. That allegation is unproven, and we print it as an allegation. It is one more reason AgentWatch triangulates: Trustpilot figures appear in this brief only alongside Reddit or Hacker News corroboration. Our own scan this cycle found Trustpilot coverage of agent platforms sparse and skewed — the top “Trustpilot” result for Relevance AI was an integration page describing Trustpilot as a data source, not a review profile at all. When the review layer itself is unreliable, the watchdog's job is to say so.</p>
+
+          <h4>§4 — Hype Autopsy: “I run my company with 30+ AI agents”</h4>
+          <p>Loud claim this cycle: a company run by 30+ AI agents. The test case is the r/AI_Agents thread asking “Is anyone actually running a company with 30+ AI agents?” — where the OP's own admission is they “can't tell what's real vs. hype.” Our verification pass found no independent verification of any such operation: no named company, no agent inventory, no auditable output. Adjacent marketing sits in the same genre — Polsia's “AI That Runs Your Company While You Sleep” pitch is a live example of the category's posture.</p>
+          <p><b class="verdict">Verdict: UNFALSIFIABLE</b> — as stated, the claim names no company, lists no agents, and measures no output, so there is no evidence that could currently confirm or refute it.</p>
+          <p>What would change the verdict: a named operator; a published roster of the agents and what each one owns end-to-end; outputs a third party could inspect — artifacts, metrics, billing records. Produce those and we will run the autopsy again, in public. Until then, treat “30+ agents” as a pitch, not a practice.</p>
+
+          <h4>§5 — Sources</h4>
+          <p>Each source consulted by hand, as of 2026-08-27.</p>
+          <ul class="src-list">
+            <li>Devin pricing · <a href="https://trickle.so/blog/devin-ai-review">trickle.so</a> · as of 2026-08-27</li>
+            <li>Devin ACU discussion · <a href="https://news.ycombinator.com/">news.ycombinator.com</a> · as of 2026-08-27</li>
+            <li>Replit billing report · <a href="https://replit.discourse.group/t/1500-in-charges/4036">replit.discourse.group</a> · as of 2026-08-27</li>
+            <li>Replit incident report · <a href="https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/">fortune.com</a> · as of 2026-08-27</li>
+            <li>Replit incident timeline · <a href="https://replitreview.com/replit-deletes-production-database/">replitreview.com</a> · as of 2026-08-27</li>
+            <li>Incident record #1152 · <a href="https://incidentdatabase.ai/cite/1152/">incidentdatabase.ai</a> · as of 2026-08-27</li>
+            <li>Reddit discussion of the incident · <a href="https://www.reddit.com/r/artificial/comments/1m4ls23/replit_ai_went_rogue_deleted_a_companys_entire/">r/artificial</a> · as of 2026-08-27</li>
+            <li>Codex plan summary · <a href="https://www.morphllm.com/codex-pricing">morphllm.com</a> · as of 2026-08-27</li>
+            <li>Codex rate card · <a href="https://help.openai.com/en/articles/11481834-chatgpt-rate-card-business-enterpriseedu">help.openai.com</a> · as of 2026-08-27</li>
+            <li>Codex limit-system thread · <a href="https://community.openai.com/t/understanding-the-new-codex-limit-system-after-the-april-9-update/1378768">community.openai.com</a> · as of 2026-08-27</li>
+            <li>CrewAI pricing page · <a href="https://crewai.com/pricing">crewai.com</a> · as of 2026-08-27</li>
+            <li>CrewAI cost analysis · <a href="https://techjacksolutions.com/ai-tools/crewai/crewai-pricing/">techjacksolutions.com</a> · as of 2026-08-27</li>
+            <li>CrewAI review · <a href="https://cybernews.com/ai-tools/crewai-review/">cybernews.com</a> · as of 2026-08-27</li>
+            <li>CrewAI deployment confusion · <a href="https://www.reddit.com/r/crewai/comments/1ibzw2x/is_crewai_really_free_and_can_it_be_deployed_in/">r/crewai</a> · as of 2026-08-27</li>
+            <li>Relevance AI reviews · <a href="https://www.g2.com/products/relevance-ai/reviews">g2.com</a> · as of 2026-08-27</li>
+            <li>Relevance AI review (conflicting tier) · <a href="https://www.salesrobot.co/blogs/relevance-ai-review">salesrobot.co</a> · as of 2026-08-27</li>
+            <li>Relevance AI review (cost) · <a href="https://reply.io/blog/relevance-ai-review/">reply.io</a> · as of 2026-08-27</li>
+            <li>Relevance AI skepticism · <a href="https://www.reddit.com/r/AI_Agents/comments/1khlfzc/is_relevance_ai_really_as_effective_at_building/">r/AI_Agents</a> · as of 2026-08-27</li>
+            <li>“30+ agents” thread · <a href="https://www.reddit.com/r/AI_Agents/comments/1t1imwx/is_anyone_actually_running_a_company_with_30_ai/">r/AI_Agents</a> · as of 2026-08-27</li>
+            <li>Trustpilot allegation thread · <a href="https://www.reddit.com/r/trustpilotcomplaints/comments/1lu331j/trustpilot_a_scam_missing_review/">r/trustpilotcomplaints</a> · as of 2026-08-27</li>
+            <li>Polsia pitch (context for §4) · <a href="https://www.busylike.com/post/polsia-ai-that-runs-your-company-while-you-sleep">busylike.com</a> · as of 2026-08-27</li>
+          </ul>
+          <p class="if-method">Source of truth: <a href="../issues/issue-000.md">issues/issue-000.md</a> — this embedded copy matches it as of 2026-08-27. Method: claims gathered by the agent, then verified line-by-line against these sources by a human before publication. Corrections: reply to this email and they print in the next issue.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <div class="cta-band">
+    <section class="sec" aria-labelledby="cta-h">
+      <div class="wrap">
+        <p class="eyebrow">No.0 ships first</p>
+        <h2 id="cta-h">Get the first issue before the next platform "changes its limits" again.</h2>
+        <p class="intro">Free. The first ~20 signups get the first issue hand-sent by the founder — real mail from a real person, not a funnel.</p>
+
+        <!-- Same waitlist form as hero — see the PRODUCTION WIRING comment in the hero for the one-line swap. -->
+        <form class="signup" novalidate>
+          <div class="form-row">
+            <label class="eyebrow" for="cta-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Your email</label>
+            <input type="email" id="cta-email" name="email" placeholder="you@yourdomain.com" autocomplete="email" required>
+            <button type="submit" data-label="Reserve Issue #0">Reserve Issue #0</button>
+          </div>
+          <p class="form-msg" role="status" aria-live="polite"></p>
+          <p class="form-meta" data-count>— on the list</p>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ FAQ ============ -->
+  <section class="sec" id="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">Questions</span><span class="rule"></span></div>
+      <h2 id="faq-h">Asked, answered.</h2>
+
+      <div class="faq-item">
+        <h3><span aria-hidden="true">Q1</span>Is it actually free?</h3>
+        <p><b>Yes — the weekly email is free, and that's the whole v0.</b> A paid archive is an idea for later, and only if the first hundred readers say it's worth paying for. There is no credit system to drain: the production cap is 4 hours of human time per week, logged.</p>
+      </div>
+      <div class="faq-item">
+        <h3><span aria-hidden="true">Q2</span>Which platforms get covered?</h3>
+        <p>The opening scan tracks 13 platforms across four groups: autonomous coding agents (Devin, Replit Agent, OpenAI Codex), supervised team platforms (Relevance AI, CrewAI, LangGraph, make.com-class automation), app builders, and the open-model stack (DeepSeek, Qwen, GLM, MiniMax). Coverage follows <b>what actually changed</b> that week — not a fixed roster.</p>
+      </div>
+      <div class="faq-item">
+        <h3><span aria-hidden="true">Q3</span>Why should I trust it?</h3>
+        <p>Because the economics remove the usual temptations: <b>no affiliates, no sponsored placement, no paid listings — ever.</b> Every claim links a primary source with an as-of date; unverifiable claims are printed as unverified, not rounded into confidence. And reliability signals are triangulated across communities, because we've read the complaints about review platforms too.</p>
+      </div>
+      <div class="faq-item">
+        <h3><span aria-hidden="true">Q4</span>When does it start?</h3>
+        <p><b>The first issue is being drafted now.</b> Early signups receive issues personally by email until the list is big enough to justify real newsletter infrastructure — which happens only if enough people show up to make it worth doing properly. <b>No list, no launch, no big promises.</b></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <a class="wordmark" href="#top">AGENT<em>WATCH</em></a>
+    <p class="foot-note"><b>Validation artifact.</b> No payments, no tracking, no cookies — signups stay in your browser. Written by a skeptical founder, verified by hand.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // GO-LIVE SWITCH (AP-02) — paste your Formspree endpoint between the quotes to switch
+  // from demo capture (localStorage, this browser only) to live capture (Formspree, free tier).
+  // Full instructions: venture-os/DEPLOY.md
+  var FORM_ENDPOINT = "https://formspree.io/f/xyeyynbl"; // wired 2026-08-28 — AP-02 go-live (owner: Ken)
+
+  var KEY = "agentwatch_waitlist";
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // localStorage can fail on some file:// / privacy-mode setups; degrade to in-memory.
+  var memory = [];
+  function loadAll(){
+    try{
+      var raw = window.localStorage.getItem(KEY);
+      return raw ? (JSON.parse(raw) || []) : memory;
+    }catch(e){ return memory; }
+  }
+  function saveAll(list){
+    memory = list;
+    try{ window.localStorage.setItem(KEY, JSON.stringify(list)); }catch(e){ /* in-memory fallback already applied */ }
+  }
+
+  function updateCounts(){
+    var n = loadAll().length;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-count]"), function(el){
+      el.textContent = n === 0
+        ? "Be the first on the list · first send goes out manually, no drip, no spam"
+        : n + " on the list · first send goes out manually, no drip, no spam";
+    });
+  }
+
+  function wireForm(form){
+    var input = form.querySelector("input[type='email']");
+    var btn = form.querySelector("button[type='submit']");
+    var msg = form.querySelector(".form-msg");
+    var label = btn.getAttribute("data-label") || "Subscribe";
+
+    function show(kind, text){
+      msg.className = "form-msg " + kind;
+      msg.textContent = text;
+    }
+
+    form.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var email = (input.value || "").trim().toLowerCase();
+
+      if(!EMAIL_RE.test(email)){
+        input.setAttribute("aria-invalid", "true");
+        show("err", "That doesn't look like an email address — check it and try again.");
+        input.focus();
+        return;
+      }
+      input.removeAttribute("aria-invalid");
+
+      var list = loadAll();
+      var idx = list.indexOf(email);
+      if(idx !== -1){
+        show("note", "You're already on the list — position #" + (idx + 1) + ". We'll be in touch.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Adding…";
+
+      if (FORM_ENDPOINT) {
+        // LIVE MODE — real capture via Formspree AJAX (free tier). Submissions land in
+        // the founder's Formspree dashboard; nothing is stored in the visitor's browser.
+        fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ email: email, source: "agentwatch-landing" })
+        }).then(function(res){
+          if (!res.ok) { throw new Error("submit failed"); }
+          show("ok", "You're on the list. Watch your inbox for Issue #0.");
+          btn.textContent = "On the list";
+          input.disabled = true;
+        }).catch(function(){
+          btn.disabled = false;
+          input.disabled = false;
+          btn.textContent = label;
+          show("err", "Something broke on our side — try again in a minute.");
+        });
+        return;
+      }
+
+      // DEMO MODE — no backend yet: signups stay in this browser (localStorage).
+      input.disabled = true;
+      list.push(email);
+      saveAll(list);
+      var pos = list.indexOf(email) + 1;
+      updateCounts();
+
+      show("ok", "You're on the list — you're #" + pos + ". Watch your inbox for Issue #0.");
+      btn.textContent = "On the list";
+    });
+
+    input.addEventListener("input", function(){
+      input.removeAttribute("aria-invalid");
+      if(msg.classList.contains("err")) show("", "");
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("form.signup"), wireForm);
+  updateCounts();
+})();
+</script>
+</body>
+</html>
